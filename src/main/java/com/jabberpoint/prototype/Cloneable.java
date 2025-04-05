@@ -1,2 +1,5 @@
-package com.jabberpoint.prototype;public interface Cloneable {
+package com.jabberpoint.prototype;
+
+public interface Cloneable
+{
 }

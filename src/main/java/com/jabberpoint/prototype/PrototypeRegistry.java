@@ -1,2 +1,5 @@
-package com.jabberpoint.prototype;public class PrototypeRegistry {
+package com.jabberpoint.prototype;
+
+public class PrototypeRegistry
+{
 }
