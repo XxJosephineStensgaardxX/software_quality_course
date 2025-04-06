@@ -1,14 +1,14 @@
 package com.jabberpoint.slide;
 
 import com.jabberpoint.Presentation;
-import com.jabberpoint.renderer.RenderUtility;
-import com.jabberpoint.renderer.SlideRenderer;
+import com.jabberpoint.render.RenderingVisitor;
 import com.jabberpoint.style.styleManager.StyleManager;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class SlideViewerComponent extends JComponent {
+public class SlideViewerComponent extends JComponent
+{
 	private Slide slide;
 	private Font labelFont;
 	private Presentation presentation;
@@ -24,8 +24,10 @@ public class SlideViewerComponent extends JComponent {
 	private static final int XPOS = 1100;
 	private static final int YPOS = 20;
 	
-	public SlideViewerComponent(Presentation presentation, JFrame frame) {
-		if (presentation == null || frame == null) {
+	public SlideViewerComponent(Presentation presentation, JFrame frame)
+	{
+		if (presentation == null || frame == null)
+		{
 			throw new IllegalArgumentException("Presentation and frame cannot be null");
 		}
 		
@@ -36,50 +38,61 @@ public class SlideViewerComponent extends JComponent {
 		this.styleManager = new StyleManager();
 	}
 	
-	public Slide getSlide() {
+	public Slide getSlide()
+	{
 		return slide;
 	}
 	
-	public void setSlide(Slide slide) {
+	public void setSlide(Slide slide)
+	{
 		this.slide = slide;
 	}
 	
-	public Font getLabelFont() {
+	public Font getLabelFont()
+	{
 		return labelFont;
 	}
 	
-	public void setLabelFont(Font labelFont) {
+	public void setLabelFont(Font labelFont)
+	{
 		this.labelFont = labelFont;
 	}
 	
-	public Presentation getPresentation() {
+	public Presentation getPresentation()
+	{
 		return presentation;
 	}
 	
-	public void setPresentation(Presentation presentation) {
+	public void setPresentation(Presentation presentation)
+	{
 		this.presentation = presentation;
 	}
 	
-	public JFrame getFrame() {
+	public JFrame getFrame()
+	{
 		return frame;
 	}
 	
-	public void setFrame(JFrame frame) {
+	public void setFrame(JFrame frame)
+	{
 		this.frame = frame;
 	}
 	
 	@Override
-	public Dimension getPreferredSize() {
+	public Dimension getPreferredSize()
+	{
 		return slide != null
 				? new Dimension(slide.getResolution().getWidth(), slide.getResolution().getHeight())
 				: new Dimension(800, 600);
 	}
 	
-	public void update(Presentation presentation, Slide data) {
+	public void update(Presentation presentation, Slide data)
+	{
 		if (presentation == null) return;
 		this.presentation = presentation;
 		
-		if (data == null) {
+		if (data == null)
+		{
 			repaint();
 			return;
 		}
@@ -87,38 +100,38 @@ public class SlideViewerComponent extends JComponent {
 		this.slide = data;
 		repaint();
 		
-		if (frame != null) {
+		if (frame != null)
+		{
 			frame.setTitle(presentation.getTitle());
 		}
 	}
 	
 	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
+	protected void paintComponent(Graphics graphics)
+	{
+		super.paintComponent(graphics);
 		
-		g.setColor(BGCOLOR);
-		g.fillRect(0, 0, getWidth(), getHeight());
+		// Paint background
+		graphics.setColor(BGCOLOR);
+		graphics.fillRect(0, 0, getWidth(), getHeight());
 		
-		if (presentation == null || slide == null || presentation.getSlideNumber() < 0) {
+		if (presentation == null || slide == null || presentation.getSlideNumber() < 0)
+		{
 			return;
 		}
 		
-		g.setFont(labelFont);
-		g.setColor(COLOR);
-		g.drawString("Slide " + (presentation.getSlideNumber() + 1) + " of " + presentation.getSize(), XPOS, YPOS);
+		// Draw slide number info
+		graphics.setFont(labelFont);
+		graphics.setColor(COLOR);
+		graphics.drawString("Slide " + (presentation.getSlideNumber() + 1) + " of " + presentation.getSize(), XPOS, YPOS);
 		
+		// Create the rendering area
 		Rectangle area = new Rectangle(0, YPOS, getWidth(), getHeight() - YPOS);
 		
-		// Create render utility with the current theme
-		RenderUtility renderUtility = new RenderUtility(
-				g,
-				this,
-				area,
-				styleManager.getTheme("Default Theme")
-		);
+		// Create the rendering visitor with the current theme
+		RenderingVisitor renderVisitor = new RenderingVisitor(graphics, this, area, styleManager.getTheme("Default Theme"));
 		
-		// Create slide renderer and render the slide
-		SlideRenderer slideRenderer = new SlideRenderer(slide);
-		slideRenderer.render(renderUtility);
+		// Let the slide accept the visitor, which will render it and all its items
+		slide.accept(renderVisitor);
 	}
 }

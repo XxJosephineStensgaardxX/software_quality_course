@@ -1,7 +1,6 @@
 package com.jabberpoint;
 
 import java.util.List;
-import java.util.Vector;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +11,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import com.jabberpoint.slide.Slide;
+import com.jabberpoint.slide.item.BitmapItem;
 import com.jabberpoint.slide.item.SlideItem;
 import com.jabberpoint.slide.item.TextItem;
 import org.xml.sax.SAXException;

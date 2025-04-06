@@ -1,5 +1,7 @@
 package com.jabberpoint.slide.item;
 
+import com.jabberpoint.render.Visitor;
+
 public class TextItem extends SlideItem
 {
 	private String text;
@@ -27,5 +29,11 @@ public class TextItem extends SlideItem
 	
 	public String toString() {
 		return "TextItem[" + getLevel()+","+getText()+"]";
+	}
+	
+	@Override
+	public void accept(Visitor visitor)
+	{
+		visitor.visit(this);
 	}
 }
