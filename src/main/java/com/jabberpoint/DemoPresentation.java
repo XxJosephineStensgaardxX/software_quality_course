@@ -1,8 +1,9 @@
 package com.jabberpoint;
 
 import com.jabberpoint.slide.Slide;
+import com.jabberpoint.slide.item.BitmapItem;
 
-class DemoPresentation extends Accessor {
+public class DemoPresentation extends Accessor {
 	
 	public void loadFile(Presentation presentation, String unusedFilename) {
 		presentation.setTitle("Demo Presentation");
