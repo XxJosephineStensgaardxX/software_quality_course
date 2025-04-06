@@ -1,9 +1,11 @@
 package com.jabberpoint.style;
 
+import com.jabberpoint.prototype.Cloneable;
+
 import java.awt.Color;
 import java.awt.Font;
 
-public class Style
+public class Style implements Cloneable<Style>
 {
 	public static final int DEFAULT_LEADING = 10;
 	public static final int DEFAULT_FONT_SIZE = 24;
@@ -107,5 +109,22 @@ public class Style
 	
 	public Font getFont(float scale) {
 		return font.deriveFont(fontSize * scale);
+	}
+
+	@Override
+	public Style clone()
+	{
+		Style clonedStyle = new Style(
+				this.indent,
+				new Color(this.color.getRGB()), // Create a new Color object with the same RGB value
+				this.fontSize,
+				this.leading,
+				this.fontName
+		);
+
+		// Font is immutable in Java, so no need for deep copy
+		clonedStyle.font = this.font;
+
+		return clonedStyle;
 	}
 }
