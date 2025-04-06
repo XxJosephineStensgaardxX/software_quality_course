@@ -1,6 +1,8 @@
 package com.jabberpoint.prototype;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import com.jabberpoint.prototype.PrototypeRegistry;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
