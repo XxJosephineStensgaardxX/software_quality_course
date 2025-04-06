@@ -9,13 +9,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.Serial;
 
 public class SlideViewerFrame extends JFrame
 {
 	private Resolution resolution = Resolution.STANDARD_DISPLAY;
-	
-	@Serial
 	private static final long serialVersionUID = 3227L;
 	private static final String WINDOW_TITLE = "JabberPoint 3";
 	

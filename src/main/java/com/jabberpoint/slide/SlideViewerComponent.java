@@ -7,7 +7,6 @@ import com.jabberpoint.style.styleManager.StyleManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.Serial;
 
 public class SlideViewerComponent extends JComponent
 {
@@ -15,8 +14,6 @@ public class SlideViewerComponent extends JComponent
 	private Font labelFont;
 	private Presentation presentation;
 	private JFrame frame;
-	
-	@Serial
 	private static final long serialVersionUID = 227L;
 	private static final Color BGCOLOR = Color.white;
 	

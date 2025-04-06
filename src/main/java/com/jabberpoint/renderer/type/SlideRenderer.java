@@ -7,6 +7,8 @@ import com.jabberpoint.slide.Slide;
 import com.jabberpoint.slide.item.SlideItem;
 import com.jabberpoint.style.Style;
 
+import java.awt.*;
+
 public class SlideRenderer implements Drawable
 {
 	private Slide slide;
@@ -40,25 +42,65 @@ public class SlideRenderer implements Drawable
 	private int drawTitleItem(int y, float scale, RenderUtility renderUtility)
 	{
 		TextItem titleItem = new TextItem(0, slide.getTitle());
-		TextItemRenderer textItemRenderer = new TextItemRenderer(titleItem);
+		TextItemRenderer textItemRenderer = new TextItemRenderer();
+		textItemRenderer.setItem(titleItem);
+		
 		Style style = renderUtility.getCurrentTheme().getStyle(titleItem.getLevel());
 		
+		// Update the position in the render utility
+		renderUtility.getScreenArea().y = y;
+		
+		// Draw the item
 		textItemRenderer.draw(renderUtility);
 		
-		return y + titleItem.getBoundingBox(renderUtility.getGraphicHandler(), renderUtility.getImageObserver(), scale, style).height;
+		// Use the renderer's calculateBoundingBox method
+		Rectangle boundingBox = textItemRenderer.calculateBoundingBox(
+				titleItem,
+				(Graphics2D)renderUtility.getGraphicHandler(),
+				style
+		);
+		
+		return y + boundingBox.height;
 	}
 	
-	private int drawSlideItems(int x, int y, float scale, RenderUtility renderUtility)
-	{
+	private int drawSlideItems(int x, int y, float scale, RenderUtility renderUtility) {
 		int currentY = y;
 		
-		for (SlideItem item : slide.getSlideItems())
-		{
+		for (SlideItem item : slide.getSlideItems()) {
+			// Get the style for this item
 			Style style = renderUtility.getCurrentTheme().getStyle(item.getLevel());
 			
-			item.draw(x, currentY, scale, renderUtility.getGraphicHandler(), style, renderUtility.getImageObserver());
+			// Create and configure the appropriate renderer based on item type
+			SlideItemRenderer renderer;
+			if (item instanceof TextItem) {
+				renderer = new TextItemRenderer();
+			}
+//			else if (item instanceof BitmapItem) {
+//				renderer = new BitmapItemRenderer();
+//			}
+			else {
+				throw new IllegalArgumentException("Unknown slide item type: " + item.getClass().getName());
+			}
 			
-			currentY += item.getBoundingBox(renderUtility.getGraphicHandler(), renderUtility.getImageObserver(), scale, style).height;
+			// Set the current item for the renderer
+			renderer.setItem(item);
+			
+			// Update the position in the render utility
+			renderUtility.getScreenArea().y = currentY;
+			renderUtility.getScreenArea().x = x;
+			
+			// Draw the item
+			renderer.draw(renderUtility);
+			
+			// Calculate the bounding box to determine the height
+			Rectangle boundingBox = renderer.calculateBoundingBox(
+					item,
+					(Graphics2D)renderUtility.getGraphicHandler(),
+					style
+			);
+			
+			// Update the Y position for the next item
+			currentY += boundingBox.height;
 		}
 		
 		return currentY;

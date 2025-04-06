@@ -2,6 +2,7 @@ package com.jabberpoint.renderer.type;
 
 import com.jabberpoint.renderer.Drawable;
 import com.jabberpoint.renderer.RenderUtility;
+import com.jabberpoint.slide.item.SlideItem;
 import com.jabberpoint.slide.item.TextItem;
 import com.jabberpoint.slide.metadata.Resolution;
 import com.jabberpoint.style.Style;
@@ -17,19 +18,13 @@ import java.text.AttributedString;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TextItemRenderer implements Drawable
+public class TextItemRenderer extends SlideItemRenderer
 {
-	private final TextItem textItem;
-	
-	public TextItemRenderer(TextItem textItem)
-	{
-		this.textItem = textItem;
-	}
-	
 	@Override
-	public void draw(RenderUtility renderUtility)
+	public void drawItem(SlideItem item, RenderUtility renderUtility)
 	{
-		String text = this.textItem.getText();
+		TextItem textItem = (TextItem) item;
+		String text = textItem.getText();
 		
 		if (text == null || text.isEmpty())
 		{
@@ -77,8 +72,9 @@ public class TextItemRenderer implements Drawable
 		return layouts;
 	}
 	
-	public Rectangle calculateBoundingBox(Graphics2D graphics2d, Style style)
+	public Rectangle calculateBoundingBox(SlideItem item, Graphics2D graphics2d, Style style)
 	{
+		TextItem textItem = (TextItem) item;
 		List<TextLayout> layouts = createTextLayouts(graphics2d, style, textItem.getText());
 		
 		int height = style.getLeading();
