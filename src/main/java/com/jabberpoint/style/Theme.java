@@ -9,6 +9,7 @@ import java.util.List;
 public class Theme implements Cloneable<Theme>
 {
 	private String themeName;
+	private ViewerStyle viewerStyle;
 	private List<Style> styles;
 	private Color slideBackgroundColor;
 	
@@ -16,6 +17,8 @@ public class Theme implements Cloneable<Theme>
 	{
 		this.themeName = themeName;
 		this.styles = new ArrayList<>();
+		this.viewerStyle = new ViewerStyle();
+		this.slideBackgroundColor = Color.WHITE; // Default background
 	}
 	
 	public String getThemeName()
@@ -26,6 +29,26 @@ public class Theme implements Cloneable<Theme>
 	public void setThemeName(String themeName)
 	{
 		this.themeName = themeName;
+	}
+	
+	public ViewerStyle getViewerStyle()
+	{
+		return viewerStyle;
+	}
+	
+	public void setViewerStyle(ViewerStyle viewerStyle)
+	{
+		this.viewerStyle = viewerStyle;
+	}
+	
+	public Color getSlideBackgroundColor()
+	{
+		return slideBackgroundColor;
+	}
+	
+	public void setSlideBackgroundColor(Color slideBackgroundColor)
+	{
+		this.slideBackgroundColor = slideBackgroundColor;
 	}
 	
 	public List<Style> getStyles()
@@ -53,23 +76,26 @@ public class Theme implements Cloneable<Theme>
 		this.styles.set(level, style);
 	}
 	
-	public Style getStyle(int level)
-	{
+	public Style getStyle(int level) {
+		if (level < 0 || level >= styles.size()) {
+			throw new IndexOutOfBoundsException("Style index " + level + " is out of bounds. Available styles: 0-" + (styles.size() - 1));
+		}
 		return this.styles.get(level);
 	}
-
+	
 	@Override
 	public Theme clone()
 	{
 		Theme clonedTheme = new Theme(this.themeName);
-
+		
 		// Deep copy styles
 		for (Style style : this.styles) {
 			clonedTheme.addStyle(style.clone()); // Assuming Style also implements Cloneable
 		}
-
+		
 		clonedTheme.slideBackgroundColor = this.slideBackgroundColor;
-
+		clonedTheme.viewerStyle = this.viewerStyle.clone();
+		
 		return clonedTheme;
 	}
 }

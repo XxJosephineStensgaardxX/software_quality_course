@@ -1,14 +1,19 @@
 package com.jabberpoint.slide;
 
+import com.jabberpoint.render.Element;
+import com.jabberpoint.render.Visitor;
 import com.jabberpoint.slide.item.SlideItem;
 import com.jabberpoint.slide.item.TextItem;
 import com.jabberpoint.slide.metadata.Resolution;
+import com.jabberpoint.style.Style;
+import com.jabberpoint.style.Theme;
 
+import java.awt.*;
+import java.awt.image.ImageObserver;
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.Rectangle;
 
-public class Slide
+public class Slide implements Element
 {
 	private Resolution resolution = Resolution.STANDARD_DISPLAY;
 	protected String title;
@@ -72,5 +77,14 @@ public class Slide
 				((float)area.width) / this.resolution.getWidth(),
 				((float)area.height) / this.resolution.getHeight()
 		);
+	}
+	
+	@Override
+	public void accept(Visitor visitor) {
+		visitor.visit(this);
+		// Let each slide item accept the visitor
+		for (SlideItem item : slideItems) {
+			item.accept(visitor);
+		}
 	}
 }

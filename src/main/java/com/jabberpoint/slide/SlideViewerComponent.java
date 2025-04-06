@@ -1,95 +1,42 @@
 package com.jabberpoint.slide;
 
-import com.jabberpoint.Presentation;
-import com.jabberpoint.renderer.RenderUtility;
-import com.jabberpoint.renderer.type.SlideRenderer;
+import com.jabberpoint.presentation.Presentation;
+import com.jabberpoint.render.RenderingVisitor;
+import com.jabberpoint.style.ViewerStyle;
 import com.jabberpoint.style.styleManager.StyleManager;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class SlideViewerComponent extends JComponent
-{
+public class SlideViewerComponent extends JComponent {
 	private Slide slide;
 	private Font labelFont;
 	private Presentation presentation;
 	private JFrame frame;
+	private StyleManager styleManager;
 	private static final long serialVersionUID = 227L;
-	private static final Color BGCOLOR = Color.white;
 	
-	private static final Color COLOR = Color.black;
-	private static final String FONTNAME = "Dialog";
-	private static final int FONT_STYLE = Font.BOLD;
-	private static final int FONT_HEIGHT = 10;
-	private static final int XPOS = 1100;
-	private static final int YPOS = 20;
-	
-	public SlideViewerComponent(Presentation presentation, JFrame frame)
-	{
-		if (presentation == null || frame == null)
-		{
+	public SlideViewerComponent(Presentation presentation, JFrame frame) {
+		if (presentation == null || frame == null) {
 			throw new IllegalArgumentException("Presentation and frame cannot be null");
 		}
 		
-		setBackground(BGCOLOR);
 		this.presentation = presentation;
-		this.labelFont = new Font(FONTNAME, FONT_STYLE, FONT_HEIGHT);
 		this.frame = frame;
-	}
-	
-	public Slide getSlide()
-	{
-		return slide;
-	}
-	
-	public void setSlide(Slide slide)
-	{
-		this.slide = slide;
-	}
-	
-	public Font getLabelFont()
-	{
-		return labelFont;
-	}
-	
-	public void setLabelFont(Font labelFont)
-	{
-		this.labelFont = labelFont;
-	}
-	
-	public Presentation getPresentation()
-	{
-		return presentation;
-	}
-	
-	public void setPresentation(Presentation presentation)
-	{
-		this.presentation = presentation;
-	}
-	
-	public JFrame getFrame()
-	{
-		return frame;
-	}
-	
-	public void setFrame(JFrame frame)
-	{
-		this.frame = frame;
-	}
-	
-	@Override
-	public Dimension getPreferredSize() {
-		return new Dimension(slide.getResolution().getWidth(), slide.getResolution().getHeight());
+		this.styleManager = new StyleManager();
+		
+		// Use viewerStyle from theme
+		ViewerStyle viewerStyle = styleManager.getTheme("Default Theme").getViewerStyle();
+		setBackground(viewerStyle.getBackgroundColor());
+		this.labelFont = viewerStyle.getFont();
+		
+		// Set a preferred size for better visibility
+		setPreferredSize(new Dimension(800, 600));
 	}
 	
 	public void update(Presentation presentation, Slide data) {
 		if (presentation == null) return;
 		this.presentation = presentation;
-		
-		if (data == null) {
-			repaint();
-			return;
-		}
 		
 		this.slide = data;
 		repaint();
@@ -100,25 +47,47 @@ public class SlideViewerComponent extends JComponent
 	}
 	
 	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
+	protected void paintComponent(Graphics graphics) {
+		super.paintComponent(graphics);
+		ViewerStyle viewerStyle = styleManager.getTheme("Default Theme").getViewerStyle();
+		graphics.setColor(viewerStyle.getBackgroundColor());
+		graphics.fillRect(0, 0, getWidth(), getHeight());
 		
-		g.setColor(BGCOLOR);
-		g.fillRect(0, 0, getWidth(), getHeight());
-		
-		if (presentation == null || slide == null || presentation.getSlideNumber() < 0) {
+		if (presentation == null || presentation.getSlideNumber() < 0) {
 			return;
 		}
 		
-		g.setFont(labelFont);
-		g.setColor(COLOR);
-		g.drawString("slide.Slide " + (presentation.getSlideNumber() + 1) + " of " + presentation.getSize(), XPOS, YPOS);
+		if (slide == null) {
+			// Try to get current slide if not set
+			slide = presentation.getCurrentSlide();
+			if (slide == null) {
+				return;
+			}
+		}
 		
-		Rectangle area = new Rectangle(0, YPOS, getWidth(), getHeight() - YPOS);
-		SlideRenderer slideRenderer = new SlideRenderer(slide);
-		StyleManager theme = new StyleManager();
-		RenderUtility renderUtility = new RenderUtility(g, this, area, theme.getTheme("Default Theme"));
-		slideRenderer.draw(renderUtility);
+		graphics.setFont(viewerStyle.getFont());
+		graphics.setColor(viewerStyle.getTextColor());
+		graphics.drawString(
+				"Slide " + (presentation.getSlideNumber() + 1) + " of " +
+						presentation.getSize(),
+				viewerStyle.getXPosition(),
+				viewerStyle.getYPosition()
+		);
+		
+		Rectangle area = new Rectangle(
+				0,
+				viewerStyle.getYPosition(),
+				getWidth(),
+				getHeight() - viewerStyle.getYPosition()
+		);
+		
+		RenderingVisitor renderVisitor = new RenderingVisitor(
+				graphics,
+				this,
+				area,
+				styleManager.getTheme("Default Theme")
+		);
+		
+		slide.accept(renderVisitor);
 	}
 }
-

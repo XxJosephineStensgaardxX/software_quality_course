@@ -1,17 +1,24 @@
 package com.jabberpoint;
 
+import com.jabberpoint.accessor.Accessor;
+import com.jabberpoint.presentation.Presentation;
 import com.jabberpoint.slide.Slide;
+import com.jabberpoint.slide.item.BitmapItem;
+import java.io.IOException;
 
-class DemoPresentation extends Accessor {
+public class DemoPresentation extends Accessor
+{
 	
+	@Override
 	public void loadFile(Presentation presentation, String unusedFilename) {
 		presentation.setTitle("Demo Presentation");
+		
 		Slide slide = new Slide();
 		slide.setTitle("JabberPoint");
 		slide.addSlideItem(1, "The Java Presentation Tool");
 		slide.addSlideItem(2, "Copyright (c) 1996-2000: Ian Darwin");
 		slide.addSlideItem(2, "Copyright (c) 2000-now:");
-		slide.addSlideItem(2, "Gert Florijn andn Sylvia Stuurman");
+		slide.addSlideItem(2, "Gert Florijn and Sylvia Stuurman");
 		slide.addSlideItem(4, "Starting JabberPoint without a filename");
 		slide.addSlideItem(4, "shows this presentation");
 		slide.addSlideItem(1, "Navigate:");
@@ -21,12 +28,12 @@ class DemoPresentation extends Accessor {
 		presentation.append(slide);
 		
 		slide = new Slide();
-		slide.setTitle("Demonstration of levels and stijlen");
+		slide.setTitle("Demonstration of levels and styles");
 		slide.addSlideItem(1, "Level 1");
 		slide.addSlideItem(2, "Level 2");
 		slide.addSlideItem(1, "Again level 1");
 		slide.addSlideItem(1, "Level 1 has style number 1");
-		slide.addSlideItem(2, "Level 2 has style number  2");
+		slide.addSlideItem(2, "Level 2 has style number 2");
 		slide.addSlideItem(3, "This is how level 3 looks like");
 		slide.addSlideItem(4, "And this is level 4");
 		presentation.append(slide);
@@ -41,7 +48,8 @@ class DemoPresentation extends Accessor {
 		presentation.append(slide);
 	}
 	
-	public void saveFile(Presentation presentation, String unusedFilename) {
-		throw new IllegalStateException("Save As->Demo! called");
+	@Override
+	public void saveFile(Presentation presentation, String unusedFilename) throws IOException {
+		throw new UnsupportedOperationException("Demo presentations cannot be saved");
 	}
 }
