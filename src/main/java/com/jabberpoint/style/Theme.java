@@ -9,6 +9,7 @@ import java.util.List;
 public class Theme implements Cloneable<Theme>
 {
 	private String themeName;
+	private ViewerStyle viewerStyle;
 	private List<Style> styles;
 	private Color slideBackgroundColor;
 	
@@ -16,6 +17,7 @@ public class Theme implements Cloneable<Theme>
 	{
 		this.themeName = themeName;
 		this.styles = new ArrayList<>();
+		this.viewerStyle = new ViewerStyle();
 	}
 	
 	public String getThemeName()
@@ -26,6 +28,26 @@ public class Theme implements Cloneable<Theme>
 	public void setThemeName(String themeName)
 	{
 		this.themeName = themeName;
+	}
+	
+	public ViewerStyle getViewerStyle()
+	{
+		return viewerStyle;
+	}
+	
+	public void setViewerStyle(ViewerStyle viewerStyle)
+	{
+		this.viewerStyle = viewerStyle;
+	}
+	
+	public Color getSlideBackgroundColor()
+	{
+		return slideBackgroundColor;
+	}
+	
+	public void setSlideBackgroundColor(Color slideBackgroundColor)
+	{
+		this.slideBackgroundColor = slideBackgroundColor;
 	}
 	
 	public List<Style> getStyles()

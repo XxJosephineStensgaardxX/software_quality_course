@@ -3,6 +3,7 @@ package com.jabberpoint.style.styleManager;
 import com.jabberpoint.style.FontName;
 import com.jabberpoint.style.Style;
 import com.jabberpoint.style.Theme;
+import com.jabberpoint.style.ViewerStyle;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -83,7 +84,15 @@ public class StyleManager
 		Style style4 = new Style(70, Color.black, 30, 10, FontName.ARIAL);
 		Style style5 = new Style(90, Color.black, 24, 10, FontName.ARIAL);
 		
-		Style uiStyle = new Style(0, Color.black, 10, 5, FontName.ARIAL);
+		ViewerStyle viewerStyle = new ViewerStyle(
+				Color.white,       // BGCOLOR
+				Color.black,       // COLOR
+				"Dialog",          // FONTNAME
+				Font.BOLD,         // FONT_STYLE
+				10,                // FONT_HEIGHT
+				1100,              // XPOS
+				20                 // YPOS
+		);
 		
 		Theme defaultTheme = new Theme("Default Theme");
 		defaultTheme.addStyle(style1);
