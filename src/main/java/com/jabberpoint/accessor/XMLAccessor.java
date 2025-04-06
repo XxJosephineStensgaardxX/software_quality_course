@@ -48,18 +48,15 @@ public class XMLAccessor extends Accessor
 		{
 			Document document = parseXmlDocument(filename);
 			processDocument(presentation, document);
-		}
-		catch (IOException iox)
+		} catch (IOException iox)
 		{
 			System.err.println(iox.toString());
 			throw iox; // Re-throw to allow caller to handle
-		}
-		catch (SAXException sax)
+		} catch (SAXException sax)
 		{
 			System.err.println(sax.getMessage());
 			throw new IOException("SAX parsing error", sax);
-		}
-		catch (ParserConfigurationException pcx)
+		} catch (ParserConfigurationException pcx)
 		{
 			System.err.println(PCE);
 			throw new IOException("Parser configuration error", pcx);
@@ -120,8 +117,7 @@ public class XMLAccessor extends Accessor
 			String content = item.getTextContent();
 			
 			addSlideItemBasedOnType(slide, level, type, content);
-		}
-		catch (NumberFormatException x)
+		} catch (NumberFormatException x)
 		{
 			System.err.println(NFE);
 		}
@@ -213,13 +209,15 @@ public class XMLAccessor extends Accessor
 	{
 		out.print("<item kind=");
 		
-		if (slideItem instanceof TextItem textItem)
+		if (slideItem instanceof TextItem)
 		{
+			TextItem textItem = (TextItem) slideItem;
 			out.print("\"text\" level=\"" + textItem.getLevel() + "\">");
 			out.print(textItem.getText());
 		}
-		else if (slideItem instanceof BitmapItem bitmapItem)
+		else if (slideItem instanceof BitmapItem)
 		{
+			BitmapItem bitmapItem = (BitmapItem) slideItem;
 			out.print("\"image\" level=\"" + bitmapItem.getLevel() + "\">");
 			out.print(bitmapItem.getName());
 		}
