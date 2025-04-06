@@ -2,21 +2,21 @@ package com.jabberpoint.slide;
 
 import com.jabberpoint.Presentation;
 import com.jabberpoint.renderer.RenderUtility;
-import com.jabberpoint.renderer.type.SlideRenderer;
+import com.jabberpoint.renderer.SlideRenderer;
 import com.jabberpoint.style.styleManager.StyleManager;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class SlideViewerComponent extends JComponent
-{
+public class SlideViewerComponent extends JComponent {
 	private Slide slide;
 	private Font labelFont;
 	private Presentation presentation;
 	private JFrame frame;
+	private StyleManager styleManager;
+	
 	private static final long serialVersionUID = 227L;
 	private static final Color BGCOLOR = Color.white;
-	
 	private static final Color COLOR = Color.black;
 	private static final String FONTNAME = "Dialog";
 	private static final int FONT_STYLE = Font.BOLD;
@@ -24,10 +24,8 @@ public class SlideViewerComponent extends JComponent
 	private static final int XPOS = 1100;
 	private static final int YPOS = 20;
 	
-	public SlideViewerComponent(Presentation presentation, JFrame frame)
-	{
-		if (presentation == null || frame == null)
-		{
+	public SlideViewerComponent(Presentation presentation, JFrame frame) {
+		if (presentation == null || frame == null) {
 			throw new IllegalArgumentException("Presentation and frame cannot be null");
 		}
 		
@@ -35,51 +33,46 @@ public class SlideViewerComponent extends JComponent
 		this.presentation = presentation;
 		this.labelFont = new Font(FONTNAME, FONT_STYLE, FONT_HEIGHT);
 		this.frame = frame;
+		this.styleManager = new StyleManager();
 	}
 	
-	public Slide getSlide()
-	{
+	public Slide getSlide() {
 		return slide;
 	}
 	
-	public void setSlide(Slide slide)
-	{
+	public void setSlide(Slide slide) {
 		this.slide = slide;
 	}
 	
-	public Font getLabelFont()
-	{
+	public Font getLabelFont() {
 		return labelFont;
 	}
 	
-	public void setLabelFont(Font labelFont)
-	{
+	public void setLabelFont(Font labelFont) {
 		this.labelFont = labelFont;
 	}
 	
-	public Presentation getPresentation()
-	{
+	public Presentation getPresentation() {
 		return presentation;
 	}
 	
-	public void setPresentation(Presentation presentation)
-	{
+	public void setPresentation(Presentation presentation) {
 		this.presentation = presentation;
 	}
 	
-	public JFrame getFrame()
-	{
+	public JFrame getFrame() {
 		return frame;
 	}
 	
-	public void setFrame(JFrame frame)
-	{
+	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
 	
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension(slide.getResolution().getWidth(), slide.getResolution().getHeight());
+		return slide != null
+				? new Dimension(slide.getResolution().getWidth(), slide.getResolution().getHeight())
+				: new Dimension(800, 600);
 	}
 	
 	public void update(Presentation presentation, Slide data) {
@@ -112,13 +105,20 @@ public class SlideViewerComponent extends JComponent
 		
 		g.setFont(labelFont);
 		g.setColor(COLOR);
-		g.drawString("slide.Slide " + (presentation.getSlideNumber() + 1) + " of " + presentation.getSize(), XPOS, YPOS);
+		g.drawString("Slide " + (presentation.getSlideNumber() + 1) + " of " + presentation.getSize(), XPOS, YPOS);
 		
 		Rectangle area = new Rectangle(0, YPOS, getWidth(), getHeight() - YPOS);
+		
+		// Create render utility with the current theme
+		RenderUtility renderUtility = new RenderUtility(
+				g,
+				this,
+				area,
+				styleManager.getTheme("Default Theme")
+		);
+		
+		// Create slide renderer and render the slide
 		SlideRenderer slideRenderer = new SlideRenderer(slide);
-		StyleManager theme = new StyleManager();
-		RenderUtility renderUtility = new RenderUtility(g, this, area, theme.getTheme("Default Theme"));
-		slideRenderer.draw(renderUtility);
+		slideRenderer.render(renderUtility);
 	}
 }
-
