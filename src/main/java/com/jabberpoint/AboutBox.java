@@ -1,7 +1,7 @@
 package com.jabberpoint;
 
-import java.awt.Frame;
-import javax.swing.JOptionPane;
+import java.awt.*;
+import javax.swing.*;
 
 public class AboutBox
 {
@@ -18,6 +18,17 @@ public class AboutBox
 	}
 	
 	public static void show(Frame frame) {
-		JOptionPane.showMessageDialog(frame, aboutMessage, "About JabberPoint", JOptionPane.INFORMATION_MESSAGE);
+		JTextArea textArea = new JTextArea(aboutMessage);
+		textArea.setEditable(false);
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
+		textArea.setBackground(UIManager.getColor("Panel.background"));
+		textArea.setFont(UIManager.getFont("Label.font"));
+		
+		// Set preferred size to control dialog dimensions
+		JScrollPane scrollPane = new JScrollPane(textArea);
+		scrollPane.setPreferredSize(new Dimension(350, 150));
+		
+		JOptionPane.showMessageDialog(frame, scrollPane, "About JabberPoint", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
