@@ -54,7 +54,7 @@ public class StyleManager
 	
 	public void removeTheme(String name)
 	{
-		if (!this.themes.containsKey(name))
+		if (this.themes.containsKey(name))
 		{
 			this.themes.remove(name);
 		}
@@ -72,7 +72,7 @@ public class StyleManager
 	
 	public void removeNamedStyle(String name)
 	{
-		this.themes.remove(name);
+		this.namedStyles.remove(name);
 	}
 	
 	private void buildDefaultTheme()

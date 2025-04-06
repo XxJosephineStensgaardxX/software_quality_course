@@ -9,7 +9,6 @@ public class Theme
 	private String themeName;
 	private List<Style> styles;
 	private Color slideBackgroundColor;
-//	private Color
 	
 	public Theme(String themeName)
 	{
