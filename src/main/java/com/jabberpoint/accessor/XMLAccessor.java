@@ -1,4 +1,4 @@
-package com.jabberpoint;
+package com.jabberpoint.accessor;
 
 import java.util.List;
 import java.io.File;
@@ -10,6 +10,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import com.jabberpoint.accessor.Accessor;
 import com.jabberpoint.presentation.Presentation;
 import com.jabberpoint.slide.Slide;
 import com.jabberpoint.slide.item.BitmapItem;
@@ -32,7 +33,8 @@ import org.w3c.dom.NodeList;
  * @version 1.6 2014/05/16 Sylvia Stuurman
  */
 
-public class XMLAccessor extends Accessor {
+public class XMLAccessor extends Accessor
+{
 	
 	/** Default API to use. */
 	protected static final String DEFAULT_API_TO_USE = "dom";

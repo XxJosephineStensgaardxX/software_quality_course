@@ -29,16 +29,14 @@ public class SlideViewerComponent extends JComponent {
 		ViewerStyle viewerStyle = styleManager.getTheme("Default Theme").getViewerStyle();
 		setBackground(viewerStyle.getBackgroundColor());
 		this.labelFont = viewerStyle.getFont();
+		
+		// Set a preferred size for better visibility
+		setPreferredSize(new Dimension(800, 600));
 	}
 	
 	public void update(Presentation presentation, Slide data) {
 		if (presentation == null) return;
 		this.presentation = presentation;
-		
-		if (data == null) {
-			repaint();
-			return;
-		}
 		
 		this.slide = data;
 		repaint();
@@ -55,8 +53,16 @@ public class SlideViewerComponent extends JComponent {
 		graphics.setColor(viewerStyle.getBackgroundColor());
 		graphics.fillRect(0, 0, getWidth(), getHeight());
 		
-		if (presentation == null || slide == null || presentation.getSlideNumber() < 0) {
+		if (presentation == null || presentation.getSlideNumber() < 0) {
 			return;
+		}
+		
+		if (slide == null) {
+			// Try to get current slide if not set
+			slide = presentation.getCurrentSlide();
+			if (slide == null) {
+				return;
+			}
 		}
 		
 		graphics.setFont(viewerStyle.getFont());
