@@ -10,6 +10,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import com.jabberpoint.presentation.Presentation;
 import com.jabberpoint.slide.Slide;
 import com.jabberpoint.slide.item.BitmapItem;
 import com.jabberpoint.slide.item.SlideItem;

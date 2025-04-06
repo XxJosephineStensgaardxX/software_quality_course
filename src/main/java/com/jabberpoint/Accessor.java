@@ -1,5 +1,7 @@
 package com.jabberpoint;
 
+import com.jabberpoint.presentation.Presentation;
+
 import java.io.IOException;
 
 /**

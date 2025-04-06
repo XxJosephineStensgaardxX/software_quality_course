@@ -1,6 +1,6 @@
 package com.jabberpoint.slide;
 
-import com.jabberpoint.Presentation;
+import com.jabberpoint.presentation.Presentation;
 import com.jabberpoint.render.RenderingVisitor;
 import com.jabberpoint.style.styleManager.StyleManager;
 
