@@ -1,12 +1,9 @@
 package com.jabberpoint.slide.item;
 
-import com.jabberpoint.style.Style;
+import com.jabberpoint.render.Element;
+import com.jabberpoint.render.Visitor;
 
-import java.awt.Rectangle;
-import java.awt.Graphics;
-import java.awt.image.ImageObserver;
-
-public abstract class SlideItem
+public abstract class SlideItem implements Element
 {
 	private int level = 0;
 	
@@ -29,4 +26,7 @@ public abstract class SlideItem
 	{
 		this.level = level;
 	}
+	
+	@Override
+	public abstract void accept(Visitor visitor);
 }

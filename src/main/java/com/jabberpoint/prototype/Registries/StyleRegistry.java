@@ -5,14 +5,17 @@ import com.jabberpoint.style.Style;
 import java.awt.Color;
 import com.jabberpoint.style.FontName;
 
-public class StyleRegistry extends PrototypeRegistry<Style> {
+public class StyleRegistry extends PrototypeRegistry<Style>
+{
 
-    public StyleRegistry() {
+    public StyleRegistry()
+    {
         super();
         initializeDefaultStyles();
     }
 
-    private void initializeDefaultStyles() {
+    private void initializeDefaultStyles()
+    {
         Style titleStyle = new Style(0, Color.BLACK, 36, 20, FontName.ARIAL);
         addPrototype("title", titleStyle);
 
@@ -26,11 +29,13 @@ public class StyleRegistry extends PrototypeRegistry<Style> {
         addPrototype("list", listStyle);
     }
 
-    public Style getTitleStyle() {
+    public Style getTitleStyle()
+    {
         return getPrototype("title");
     }
 
-    public Style getHeadingStyle() {
+    public Style getHeadingStyle()
+    {
         return getPrototype("heading");
     }
 }
