@@ -4,19 +4,20 @@ import com.jabberpoint.presentation.Presentation;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-/**
- * Controller for keyboard input to navigate the presentation
- */
-public class KeyController extends KeyAdapter {
+public class KeyController extends KeyAdapter
+{
 	private Presentation presentation;
 	
-	public KeyController(Presentation presentation) {
+	public KeyController(Presentation presentation)
+	{
 		this.presentation = presentation;
 	}
 	
 	@Override
-	public void keyPressed(KeyEvent keyEvent) {
-		switch(keyEvent.getKeyCode()) {
+	public void keyPressed(KeyEvent keyEvent)
+	{
+		switch(keyEvent.getKeyCode())
+		{
 			case KeyEvent.VK_PAGE_DOWN:
 			case KeyEvent.VK_DOWN:
 			case KeyEvent.VK_ENTER:

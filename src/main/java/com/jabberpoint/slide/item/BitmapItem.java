@@ -8,42 +8,47 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
-public class BitmapItem extends SlideItem {
+public class BitmapItem extends SlideItem
+{
 	private BufferedImage bufferedImage;
 	private String imageName;
 	
 	protected static final String FILE = "File ";
 	protected static final String NOTFOUND = " not found";
 	
-	// Default placeholder dimensions
 	private static final int PLACEHOLDER_WIDTH = 320;
 	private static final int PLACEHOLDER_HEIGHT = 240;
 	
-	// Colors for the placeholder
 	private static final Color PLACEHOLDER_BG = new Color(200, 200, 200);
 	private static final Color PLACEHOLDER_TEXT = new Color(80, 80, 80);
 	private static final Color PLACEHOLDER_BORDER = new Color(150, 150, 150);
 	
-	public BitmapItem(int level, String name) {
+	public BitmapItem(int level, String name)
+	{
 		super(level);
 		imageName = name;
-		try {
+		try
+		{
 			File imageFile = new File(imageName);
-			if (imageFile.exists()) {
+			if (imageFile.exists())
+			{
 				bufferedImage = ImageIO.read(imageFile);
-			} else {
+			}
+			else
+			{
 				System.err.println(FILE + imageName + NOTFOUND);
 				bufferedImage = createPlaceholderImage();
 			}
 		}
-		catch (IOException e) {
+		catch (IOException e)
+		{
 			System.err.println(FILE + imageName + NOTFOUND + ": " + e.getMessage());
 			bufferedImage = createPlaceholderImage();
 		}
 	}
 	
-	//creates placeholder if image file is missing
-	private BufferedImage createPlaceholderImage() {
+	private BufferedImage createPlaceholderImage()
+	{
 		BufferedImage placeholder = new BufferedImage(
 				PLACEHOLDER_WIDTH, PLACEHOLDER_HEIGHT, BufferedImage.TYPE_INT_RGB);
 		
@@ -72,40 +77,43 @@ public class BitmapItem extends SlideItem {
 		return placeholder;
 	}
 	
-	//helper method
-	private void drawImageSymbol(Graphics2D g2d) {
+	private void drawImageSymbol(Graphics2D g2d)
+	{
 		int symbolSize = 60;
 		int x = (PLACEHOLDER_WIDTH - symbolSize) / 2;
 		int y = (PLACEHOLDER_HEIGHT - symbolSize) / 2 - 40;
 		
-		// Mountain/landscape icon
 		g2d.setColor(PLACEHOLDER_TEXT);
 		int[] xPoints = {x, x + symbolSize/2, x + symbolSize};
 		int[] yPoints = {y + symbolSize, y + symbolSize/3, y + symbolSize};
 		g2d.fillPolygon(xPoints, yPoints, 3);
 		
-		// Sun
 		g2d.fillOval(x + symbolSize/2 - 10, y, 20, 20);
 	}
 	
-	public BitmapItem() {
+	public BitmapItem()
+	{
 		this(0, null);
 	}
 	
-	public String getName() {
+	public String getName()
+	{
 		return imageName;
 	}
 	
-	public BufferedImage getBufferedImage() {
+	public BufferedImage getBufferedImage()
+	{
 		return bufferedImage;
 	}
 	
-	public String toString() {
+	public String toString()
+	{
 		return "BitmapItem[" + getLevel() + "," + imageName + "]";
 	}
 	
 	@Override
-	public void accept(Visitor visitor) {
+	public void accept(Visitor visitor)
+	{
 		visitor.visit(this);
 	}
 }

@@ -76,12 +76,9 @@ public class Theme implements Cloneable<Theme>
 		this.styles.set(level, style);
 	}
 	
-	public Style getStyle(int level)
-	{
-		// Ensure we don't get an index out of bounds error
+	public Style getStyle(int level) {
 		if (level < 0 || level >= styles.size()) {
-			// Return a default style if level is out of range
-			return new Style();
+			throw new IndexOutOfBoundsException("Style index " + level + " is out of bounds. Available styles: 0-" + (styles.size() - 1));
 		}
 		return this.styles.get(level);
 	}

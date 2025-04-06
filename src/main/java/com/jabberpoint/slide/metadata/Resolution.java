@@ -9,7 +9,8 @@ public enum Resolution
 	private final int width;
 	private final int height;
 	
-	Resolution(int width, int height) {
+	Resolution(int width, int height)
+	{
 		this.width = width;
 		this.height = height;
 	}
@@ -24,11 +25,13 @@ public enum Resolution
 		return height;
 	}
 	
-	public String toString() {
+	public String toString()
+	{
 		return this.width + " x " + this.height;
 	}
 	
-	public double getAspectRatio() {
+	public double getAspectRatio()
+	{
 		return (double) width / height;
 	}
 }

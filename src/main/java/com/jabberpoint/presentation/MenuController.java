@@ -18,14 +18,16 @@ import java.io.IOException;
 
 import javax.swing.*;
 
-public class MenuController extends MenuBar {
+public class MenuController extends MenuBar
+{
 	private Frame parent;
 	private Presentation presentation;
 	private AccessorCreator accessorCreator;
 	
 	private static final long serialVersionUID = 227L;
 	
-	public MenuController(Frame frame, Presentation pres, AccessorCreator accessorCreator) {
+	public MenuController(Frame frame, Presentation pres, AccessorCreator accessorCreator)
+	{
 		parent = frame;
 		presentation = pres;
 		this.accessorCreator = accessorCreator;
@@ -35,7 +37,8 @@ public class MenuController extends MenuBar {
 		setHelpMenu(createHelpMenu());
 	}
 	
-	private Menu createFileMenu() {
+	private Menu createFileMenu()
+	{
 		Menu fileMenu = new Menu(MenuLabel.FILE.getLabel());
 		
 		MenuItem openItem = mkMenuItem(MenuLabel.OPEN.getLabel());
@@ -59,7 +62,8 @@ public class MenuController extends MenuBar {
 		return fileMenu;
 	}
 	
-	private Menu createViewMenu() {
+	private Menu createViewMenu()
+	{
 		Menu viewMenu = new Menu(MenuLabel.VIEW.getLabel());
 		
 		MenuItem nextItem = mkMenuItem(MenuLabel.NEXT.getLabel());
@@ -77,7 +81,8 @@ public class MenuController extends MenuBar {
 		return viewMenu;
 	}
 	
-	private Menu createHelpMenu() {
+	private Menu createHelpMenu()
+	{
 		Menu helpMenu = new Menu(MenuLabel.HELP.getLabel());
 		
 		MenuItem aboutItem = mkMenuItem(MenuLabel.ABOUT.getLabel());
@@ -87,68 +92,86 @@ public class MenuController extends MenuBar {
 		return helpMenu;
 	}
 	
-	public void goToSlide() {
+	public void goToSlide()
+	{
 		String pageNumberStr = JOptionPane.showInputDialog(parent, MenuLabel.PAGE_NUMBER);
-		if (pageNumberStr != null && !pageNumberStr.isEmpty()) {
-			try {
+		if (pageNumberStr != null && !pageNumberStr.isEmpty())
+		{
+			try
+			{
 				int pageNumber = Integer.parseInt(pageNumberStr);
 				presentation.setSlideNumber(pageNumber - 1);
-			} catch (NumberFormatException e) {
+			}
+			catch (NumberFormatException e)
+			{
 				JOptionPane.showMessageDialog(parent, "Please enter a valid number",
 											  "Invalid Input", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
 	
-	public void nextSlide() {
+	public void nextSlide()
+	{
 		presentation.nextSlide();
 	}
 	
-	public void prevSlide() {
+	public void prevSlide()
+	{
 		presentation.prevSlide();
 	}
 	
-	public void openPresentation() {
+	public void openPresentation()
+	{
 		presentation.clear();
-		// Use the factory method to create an accessor
 		Accessor accessor = accessorCreator.getAccessor();
-		try {
+		try
+		{
 			accessor.loadFile(presentation, MenuFile.TEST.getFilename());
 			presentation.setSlideNumber(0);
-		} catch (IOException exc) {
+		}
+		catch (IOException exc)
+		{
 			JOptionPane.showMessageDialog(parent, MenuError.IO_EXCEPTION.getMessage() + exc,
 										  MenuError.LOAD_ERROR.getMessage(), JOptionPane.ERROR_MESSAGE);
 		}
 		parent.repaint();
 	}
 	
-	public void savePresentation() {
+	public void savePresentation()
+	{
 		File fileToSave = showSaveFileDialog();
-		if (fileToSave != null) {
+		if (fileToSave != null)
+		{
 			saveToXmlFile(fileToSave);
 		}
 	}
 	
-	private File showSaveFileDialog() {
+	private File showSaveFileDialog()
+	{
 		JFileChooser fileChooser = createXmlFileChooser("Save Presentation");
 		
 		int userSelection = fileChooser.showSaveDialog(parent);
-		if (userSelection == JFileChooser.APPROVE_OPTION) {
+		if (userSelection == JFileChooser.APPROVE_OPTION)
+		{
 			File selectedFile = fileChooser.getSelectedFile();
 			return ensureXmlExtension(selectedFile);
 		}
 		return null;
 	}
 	
-	private JFileChooser createXmlFileChooser(String dialogTitle) {
+	private JFileChooser createXmlFileChooser(String dialogTitle)
+	{
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle(dialogTitle);
 		
-		fileChooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
-			public boolean accept(File file) {
+		fileChooser.setFileFilter(new javax.swing.filechooser.FileFilter()
+		{
+			public boolean accept(File file)
+			{
 				return file.isDirectory() || file.getName().toLowerCase().endsWith(".xml");
 			}
-			public String getDescription() {
+			public String getDescription()
+			{
 				return "XML Files (*.xml)";
 			}
 		});
@@ -156,50 +179,60 @@ public class MenuController extends MenuBar {
 		return fileChooser;
 	}
 	
-	private File ensureXmlExtension(File file) {
+	private File ensureXmlExtension(File file)
+	{
 		String filePath = file.getAbsolutePath();
-		if (!filePath.toLowerCase().endsWith(".xml")) {
+		if (!filePath.toLowerCase().endsWith(".xml"))
+		{
 			filePath += ".xml";
 			return new File(filePath);
 		}
 		return file;
 	}
 	
-	private void saveToXmlFile(File file) {
+	private void saveToXmlFile(File file)
+	{
 		XMLAccessor xmlAccessor = new XMLAccessor();
-		try {
+		try
+		{
 			xmlAccessor.saveFile(presentation, file.getAbsolutePath());
 			showSuccessMessage(file.getName());
-		} catch (IOException exc) {
+		}
+		catch (IOException exc)
+		{
 			showErrorMessage(exc);
 		}
 	}
 	
-	private void showSuccessMessage(String fileName) {
+	private void showSuccessMessage(String fileName)
+	{
 		JOptionPane.showMessageDialog(parent,
 									  "Presentation saved successfully as " + fileName,
 									  "Save Success",
 									  JOptionPane.INFORMATION_MESSAGE);
 	}
 	
-	private void showErrorMessage(Exception exc) {
+	private void showErrorMessage(Exception exc)
+	{
 		JOptionPane.showMessageDialog(parent,
 									  MenuError.IO_EXCEPTION.getMessage() + exc,
 									  MenuError.SAVE_ERROR.getMessage(),
 									  JOptionPane.ERROR_MESSAGE);
 	}
 	
-	public void clearPresentation() {
+	public void clearPresentation()
+	{
 		presentation.clear();
 		parent.repaint();
 	}
 	
-	public void exitPresentation() {
+	public void exitPresentation()
+	{
 		presentation.exit(0);
 	}
 	
-	// Helper method to create menu items
-	private MenuItem mkMenuItem(String name) {
+	private MenuItem mkMenuItem(String name)
+	{
 		return new MenuItem(name, new MenuShortcut(name.charAt(0)));
 	}
 }
