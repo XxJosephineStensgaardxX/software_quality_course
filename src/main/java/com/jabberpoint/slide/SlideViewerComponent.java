@@ -31,6 +31,23 @@ public class SlideViewerComponent extends JComponent {
 		this.labelFont = viewerStyle.getFont();
 	}
 	
+	public void update(Presentation presentation, Slide data) {
+		if (presentation == null) return;
+		this.presentation = presentation;
+		
+		if (data == null) {
+			repaint();
+			return;
+		}
+		
+		this.slide = data;
+		repaint();
+		
+		if (frame != null) {
+			frame.setTitle(presentation.getTitle());
+		}
+	}
+	
 	@Override
 	protected void paintComponent(Graphics graphics) {
 		super.paintComponent(graphics);
