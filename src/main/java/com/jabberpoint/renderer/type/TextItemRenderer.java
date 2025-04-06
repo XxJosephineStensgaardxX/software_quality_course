@@ -1,10 +1,10 @@
-package com.nhlstenden.renderer.type;
+package com.jabberpoint.renderer.type;
 
-import com.nhlstenden.renderer.Drawable;
-import com.nhlstenden.renderer.RenderUtility;
-import com.nhlstenden.slide.item.TextItem;
-import com.nhlstenden.slide.metadata.Resolution;
-import com.nhlstenden.style.Style;
+import com.jabberpoint.renderer.Drawable;
+import com.jabberpoint.renderer.RenderUtility;
+import com.jabberpoint.slide.item.TextItem;
+import com.jabberpoint.slide.metadata.Resolution;
+import com.jabberpoint.style.Style;
 
 import java.awt.*;
 import java.awt.font.FontRenderContext;

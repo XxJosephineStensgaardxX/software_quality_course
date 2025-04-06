@@ -1,7 +1,7 @@
-package com.nhlstenden;
+package com.jabberpoint;
 
-import com.nhlstenden.slide.item.SlideItem;
-import com.nhlstenden.style.Style;
+import com.jabberpoint.slide.item.SlideItem;
+import com.jabberpoint.style.Style;
 
 import java.awt.Rectangle;
 import java.awt.Graphics;

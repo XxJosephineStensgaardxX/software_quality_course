@@ -1,9 +1,9 @@
-package com.nhlstenden.slide;
+package com.jabberpoint.slide;
 
-import com.nhlstenden.KeyController;
-import com.nhlstenden.MenuController;
-import com.nhlstenden.Presentation;
-import com.nhlstenden.slide.metadata.Resolution;
+import com.jabberpoint.KeyController;
+import com.jabberpoint.MenuController;
+import com.jabberpoint.Presentation;
+import com.jabberpoint.slide.metadata.Resolution;
 
 import javax.swing.*;
 import java.awt.*;

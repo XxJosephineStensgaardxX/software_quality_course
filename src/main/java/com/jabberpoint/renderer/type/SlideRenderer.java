@@ -1,11 +1,11 @@
-package com.nhlstenden.renderer.type;
+package com.jabberpoint.renderer.type;
 
-import com.nhlstenden.slide.item.TextItem;
-import com.nhlstenden.renderer.Drawable;
-import com.nhlstenden.renderer.RenderUtility;
-import com.nhlstenden.slide.Slide;
-import com.nhlstenden.slide.item.SlideItem;
-import com.nhlstenden.style.Style;
+import com.jabberpoint.slide.item.TextItem;
+import com.jabberpoint.renderer.Drawable;
+import com.jabberpoint.renderer.RenderUtility;
+import com.jabberpoint.slide.Slide;
+import com.jabberpoint.slide.item.SlideItem;
+import com.jabberpoint.style.Style;
 
 public class SlideRenderer implements Drawable
 {

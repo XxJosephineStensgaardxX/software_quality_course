@@ -1,6 +1,6 @@
-package com.nhlstenden.renderer;
+package com.jabberpoint.renderer;
 
-import com.nhlstenden.style.Theme;
+import com.jabberpoint.style.Theme;
 
 import java.awt.*;
 import java.awt.image.ImageObserver;

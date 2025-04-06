@@ -1,4 +1,4 @@
-package com.nhlstenden;
+package com.jabberpoint;
 
 import java.io.IOException;
 

@@ -1,6 +1,6 @@
-package com.nhlstenden;
+package com.jabberpoint;
 
-import com.nhlstenden.Presentation;
+import com.jabberpoint.Presentation;
 
 import java.awt.MenuBar;
 import java.awt.Frame;

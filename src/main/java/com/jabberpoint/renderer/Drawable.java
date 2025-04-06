@@ -1,4 +1,4 @@
-package com.nhlstenden.renderer;
+package com.jabberpoint.renderer;
 
 public interface Drawable
 {

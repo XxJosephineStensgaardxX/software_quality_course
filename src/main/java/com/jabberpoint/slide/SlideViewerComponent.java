@@ -1,16 +1,13 @@
-package com.nhlstenden.slide;
+package com.jabberpoint.slide;
 
-import com.nhlstenden.Presentation;
-import com.nhlstenden.renderer.RenderUtility;
-import com.nhlstenden.renderer.type.SlideRenderer;
-import com.nhlstenden.style.Theme;
-import com.nhlstenden.style.styleManager.StyleManager;
+import com.jabberpoint.Presentation;
+import com.jabberpoint.renderer.RenderUtility;
+import com.jabberpoint.renderer.type.SlideRenderer;
+import com.jabberpoint.style.styleManager.StyleManager;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.image.ImageObserver;
 import java.io.Serial;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
 
 public class SlideViewerComponent extends JComponent
 {

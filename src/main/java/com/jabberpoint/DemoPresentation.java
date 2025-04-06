@@ -1,6 +1,6 @@
-package com.nhlstenden;
+package com.jabberpoint;
 
-import com.nhlstenden.slide.Slide;
+import com.jabberpoint.slide.Slide;
 
 class DemoPresentation extends Accessor {
 	

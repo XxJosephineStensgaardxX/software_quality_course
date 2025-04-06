@@ -1,8 +1,8 @@
-package com.nhlstenden.slide;
+package com.jabberpoint.slide;
 
-import com.nhlstenden.slide.item.SlideItem;
-import com.nhlstenden.slide.item.TextItem;
-import com.nhlstenden.slide.metadata.Resolution;
+import com.jabberpoint.slide.item.SlideItem;
+import com.jabberpoint.slide.item.TextItem;
+import com.jabberpoint.slide.metadata.Resolution;
 
 import java.util.ArrayList;
 import java.util.List;

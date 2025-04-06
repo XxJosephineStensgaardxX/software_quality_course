@@ -1,9 +1,9 @@
-package com.nhlstenden.slide.item;
+package com.jabberpoint.slide.item;
 
-import com.nhlstenden.renderer.type.TextItemRenderer;
-import com.nhlstenden.slide.Slide;
-import com.nhlstenden.slide.metadata.Resolution;
-import com.nhlstenden.style.Style;
+import com.jabberpoint.renderer.type.TextItemRenderer;
+import com.jabberpoint.slide.Slide;
+import com.jabberpoint.slide.metadata.Resolution;
+import com.jabberpoint.style.Style;
 
 import java.awt.Rectangle;
 import java.awt.Graphics;

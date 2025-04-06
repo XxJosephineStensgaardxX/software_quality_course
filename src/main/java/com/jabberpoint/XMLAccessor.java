@@ -1,4 +1,4 @@
-package com.nhlstenden;
+package com.jabberpoint;
 
 import java.util.List;
 import java.util.Vector;
@@ -11,9 +11,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import com.nhlstenden.slide.Slide;
-import com.nhlstenden.slide.item.SlideItem;
-import com.nhlstenden.slide.item.TextItem;
+import com.jabberpoint.slide.Slide;
+import com.jabberpoint.slide.item.SlideItem;
+import com.jabberpoint.slide.item.TextItem;
 import org.xml.sax.SAXException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

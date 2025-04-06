@@ -1,8 +1,8 @@
-package com.nhlstenden.style.styleManager;
+package com.jabberpoint.style.styleManager;
 
-import com.nhlstenden.style.FontName;
-import com.nhlstenden.style.Style;
-import com.nhlstenden.style.Theme;
+import com.jabberpoint.style.FontName;
+import com.jabberpoint.style.Style;
+import com.jabberpoint.style.Theme;
 
 import java.awt.*;
 import java.util.HashMap;

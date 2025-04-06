@@ -1,4 +1,4 @@
-package com.nhlstenden.style;
+package com.jabberpoint.style;
 
 public enum FontName {
 	ARIAL("Arial"),

@@ -1,4 +1,4 @@
-package com.nhlstenden;
+package com.jabberpoint;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;

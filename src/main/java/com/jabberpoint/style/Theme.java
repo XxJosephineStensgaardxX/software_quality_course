@@ -1,4 +1,4 @@
-package com.nhlstenden.style;
+package com.jabberpoint.style;
 
 import java.awt.*;
 import java.util.ArrayList;

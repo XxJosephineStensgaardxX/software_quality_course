@@ -1,6 +1,6 @@
-package com.nhlstenden;
+package com.jabberpoint;
 
-import com.nhlstenden.style.styleManager.StyleManager;
+import com.jabberpoint.style.styleManager.StyleManager;
 
 public class JabberPoint
 {

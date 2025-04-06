@@ -1,4 +1,4 @@
-package com.nhlstenden.style;
+package com.jabberpoint.style;
 
 import java.awt.Color;
 import java.awt.Font;

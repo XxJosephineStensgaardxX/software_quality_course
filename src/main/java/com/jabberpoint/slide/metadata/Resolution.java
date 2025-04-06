@@ -1,4 +1,4 @@
-package com.nhlstenden.slide.metadata;
+package com.jabberpoint.slide.metadata;
 
 public enum Resolution
 {
