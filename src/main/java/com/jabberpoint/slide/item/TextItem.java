@@ -45,12 +45,6 @@ public class TextItem extends SlideItem
 		this.text = text;
 	}
 	
-	public Rectangle getBoundingBox(Graphics g, ImageObserver observer, float scale, Style style)
-	{
-		TextItemRenderer renderer = new TextItemRenderer(this);
-		return renderer.calculateBoundingBox(g, observer, scale, style);
-	}
-	
 	public String toString() {
 		return "TextItem[" + getLevel()+","+getText()+"]";
 	}

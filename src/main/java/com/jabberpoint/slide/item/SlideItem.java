@@ -29,7 +29,4 @@ public abstract class SlideItem
 	{
 		this.level = level;
 	}
-	
-	// Give the bounding box
-	public abstract Rectangle getBoundingBox(Graphics g, ImageObserver observer, float scale, Style style);
 }
