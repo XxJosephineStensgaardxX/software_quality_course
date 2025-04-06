@@ -18,6 +18,7 @@ public class Theme implements Cloneable<Theme>
 		this.themeName = themeName;
 		this.styles = new ArrayList<>();
 		this.viewerStyle = new ViewerStyle();
+		this.slideBackgroundColor = Color.WHITE; // Default background
 	}
 	
 	public String getThemeName()
@@ -77,21 +78,27 @@ public class Theme implements Cloneable<Theme>
 	
 	public Style getStyle(int level)
 	{
+		// Ensure we don't get an index out of bounds error
+		if (level < 0 || level >= styles.size()) {
+			// Return a default style if level is out of range
+			return new Style();
+		}
 		return this.styles.get(level);
 	}
-
+	
 	@Override
 	public Theme clone()
 	{
 		Theme clonedTheme = new Theme(this.themeName);
-
+		
 		// Deep copy styles
 		for (Style style : this.styles) {
 			clonedTheme.addStyle(style.clone()); // Assuming Style also implements Cloneable
 		}
-
+		
 		clonedTheme.slideBackgroundColor = this.slideBackgroundColor;
-
+		clonedTheme.viewerStyle = this.viewerStyle.clone();
+		
 		return clonedTheme;
 	}
 }

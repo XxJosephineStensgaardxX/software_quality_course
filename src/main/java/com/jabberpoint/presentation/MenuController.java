@@ -1,8 +1,9 @@
 package com.jabberpoint.presentation;
 
 import com.jabberpoint.AboutBox;
-import com.jabberpoint.Accessor;
-import com.jabberpoint.XMLAccessor;
+import com.jabberpoint.accessor.Accessor;
+import com.jabberpoint.accessor.XMLAccessor;
+import com.jabberpoint.accessor.creator.AccessorCreator;
 import com.jabberpoint.presentation.config.MenuError;
 import com.jabberpoint.presentation.config.MenuFile;
 import com.jabberpoint.presentation.config.MenuLabel;
@@ -12,19 +13,22 @@ import java.awt.MenuBar;
 import java.awt.Menu;
 import java.awt.MenuItem;
 import java.awt.MenuShortcut;
+import java.io.File;
 import java.io.IOException;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 public class MenuController extends MenuBar {
 	private Frame parent;
 	private Presentation presentation;
+	private AccessorCreator accessorCreator;
 	
 	private static final long serialVersionUID = 227L;
 	
-	public MenuController(Frame frame, Presentation pres) {
+	public MenuController(Frame frame, Presentation pres, AccessorCreator accessorCreator) {
 		parent = frame;
 		presentation = pres;
+		this.accessorCreator = accessorCreator;
 		
 		add(createFileMenu());
 		add(createViewMenu());
@@ -83,8 +87,6 @@ public class MenuController extends MenuBar {
 		return helpMenu;
 	}
 	
-	// Navigation methods remain unchanged
-	
 	public void goToSlide() {
 		String pageNumberStr = JOptionPane.showInputDialog(parent, MenuLabel.PAGE_NUMBER);
 		if (pageNumberStr != null && !pageNumberStr.isEmpty()) {
@@ -108,9 +110,10 @@ public class MenuController extends MenuBar {
 	
 	public void openPresentation() {
 		presentation.clear();
-		Accessor xmlAccessor = new XMLAccessor();
+		// Use the factory method to create an accessor
+		Accessor accessor = accessorCreator.getAccessor();
 		try {
-			xmlAccessor.loadFile(presentation, MenuFile.TEST.getFilename());
+			accessor.loadFile(presentation, MenuFile.TEST.getFilename());
 			presentation.setSlideNumber(0);
 		} catch (IOException exc) {
 			JOptionPane.showMessageDialog(parent, MenuError.IO_EXCEPTION.getMessage() + exc,
@@ -120,13 +123,70 @@ public class MenuController extends MenuBar {
 	}
 	
 	public void savePresentation() {
-		Accessor xmlAccessor = new XMLAccessor();
-		try {
-			xmlAccessor.saveFile(presentation, MenuFile.SAVE.getFilename());
-		} catch (IOException exc) {
-			JOptionPane.showMessageDialog(parent, MenuError.IO_EXCEPTION.getMessage() + exc,
-										  MenuError.SAVE_ERROR.getMessage(), JOptionPane.ERROR_MESSAGE);
+		File fileToSave = showSaveFileDialog();
+		if (fileToSave != null) {
+			saveToXmlFile(fileToSave);
 		}
+	}
+	
+	private File showSaveFileDialog() {
+		JFileChooser fileChooser = createXmlFileChooser("Save Presentation");
+		
+		int userSelection = fileChooser.showSaveDialog(parent);
+		if (userSelection == JFileChooser.APPROVE_OPTION) {
+			File selectedFile = fileChooser.getSelectedFile();
+			return ensureXmlExtension(selectedFile);
+		}
+		return null;
+	}
+	
+	private JFileChooser createXmlFileChooser(String dialogTitle) {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle(dialogTitle);
+		
+		fileChooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
+			public boolean accept(File file) {
+				return file.isDirectory() || file.getName().toLowerCase().endsWith(".xml");
+			}
+			public String getDescription() {
+				return "XML Files (*.xml)";
+			}
+		});
+		
+		return fileChooser;
+	}
+	
+	private File ensureXmlExtension(File file) {
+		String filePath = file.getAbsolutePath();
+		if (!filePath.toLowerCase().endsWith(".xml")) {
+			filePath += ".xml";
+			return new File(filePath);
+		}
+		return file;
+	}
+	
+	private void saveToXmlFile(File file) {
+		XMLAccessor xmlAccessor = new XMLAccessor();
+		try {
+			xmlAccessor.saveFile(presentation, file.getAbsolutePath());
+			showSuccessMessage(file.getName());
+		} catch (IOException exc) {
+			showErrorMessage(exc);
+		}
+	}
+	
+	private void showSuccessMessage(String fileName) {
+		JOptionPane.showMessageDialog(parent,
+									  "Presentation saved successfully as " + fileName,
+									  "Save Success",
+									  JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	private void showErrorMessage(Exception exc) {
+		JOptionPane.showMessageDialog(parent,
+									  MenuError.IO_EXCEPTION.getMessage() + exc,
+									  MenuError.SAVE_ERROR.getMessage(),
+									  JOptionPane.ERROR_MESSAGE);
 	}
 	
 	public void clearPresentation() {

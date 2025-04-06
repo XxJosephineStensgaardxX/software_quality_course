@@ -1,5 +1,7 @@
 package com.jabberpoint.slide;
 
+import com.jabberpoint.accessor.creator.AccessorCreator;
+import com.jabberpoint.accessor.creator.XMLAccessorCreator;
 import com.jabberpoint.presentation.KeyController;
 import com.jabberpoint.presentation.MenuController;
 import com.jabberpoint.presentation.Presentation;
@@ -10,9 +12,6 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-/**
- * The main application window for the JabberPoint presentation viewer
- */
 public class SlideViewerFrame extends JFrame {
 	private Resolution resolution = Resolution.STANDARD_DISPLAY;
 	private static final long serialVersionUID = 3227L;
@@ -23,6 +22,8 @@ public class SlideViewerFrame extends JFrame {
 		SlideViewerComponent slideViewerComponent = new SlideViewerComponent(presentation, this);
 		presentation.setShowView(slideViewerComponent);
 		setupWindow(slideViewerComponent, presentation);
+		// Make the frame visible after setup
+		setVisible(true);
 	}
 	
 	public Resolution getResolution() {
@@ -51,11 +52,10 @@ public class SlideViewerFrame extends JFrame {
 		// Add controllers
 		KeyController keyController = new KeyController(presentation);
 		addKeyListener(keyController);
-		
-		MenuController menuController = new MenuController(this, presentation);
+	}
+	
+	public void setMenuController(AccessorCreator accessorCreator, Presentation presentation) {
+		MenuController menuController = new MenuController(this, presentation, accessorCreator);
 		setMenuBar(menuController);
-		
-		// Show the window
-		setVisible(true);
 	}
 }

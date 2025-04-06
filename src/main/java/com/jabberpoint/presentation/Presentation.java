@@ -41,9 +41,12 @@ public class Presentation {
 	}
 	
 	public void setSlideNumber(int number) {
-		currentSlideNumber = number;
-		if (slideViewComponent != null) {
-			slideViewComponent.update(this, getCurrentSlide());
+		// Only update if it's a valid slide number
+		if (number >= -1 && (slides.isEmpty() || number < slides.size())) {
+			currentSlideNumber = number;
+			if (slideViewComponent != null && currentSlideNumber >= 0) {
+				slideViewComponent.update(this, getCurrentSlide());
+			}
 		}
 	}
 	
@@ -70,6 +73,11 @@ public class Presentation {
 	
 	public void append(Slide slide) {
 		slides.add(slide);
+		// If this is the first slide added and no current slide is selected,
+		// automatically select this slide
+		if (slides.size() == 1 && currentSlideNumber == -1) {
+			setSlideNumber(0);
+		}
 	}
 	
 	public Slide getSlide(int number) {
