@@ -1,10 +1,12 @@
 package com.jabberpoint.style;
 
+import com.jabberpoint.prototype.Cloneable;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Theme
+public class Theme implements Cloneable<Theme>
 {
 	private String themeName;
 	private List<Style> styles;
@@ -54,5 +56,20 @@ public class Theme
 	public Style getStyle(int level)
 	{
 		return this.styles.get(level);
+	}
+
+	@Override
+	public Theme clone()
+	{
+		Theme clonedTheme = new Theme(this.themeName);
+
+		// Deep copy styles
+		for (Style style : this.styles) {
+			clonedTheme.addStyle(style.clone()); // Assuming Style also implements Cloneable
+		}
+
+		clonedTheme.slideBackgroundColor = this.slideBackgroundColor;
+
+		return clonedTheme;
 	}
 }
